@@ -1,3 +1,3 @@
 <?php 
-$connect = new mysqli('localhost', 'root', '', 'muzium');
+$connect = mysqli_conect('localhost', 'root', '', 'muzium');
 ?>
