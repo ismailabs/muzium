@@ -1,3 +1,3 @@
 <?php 
-$connect = new mysqli('localhost', 'root', '', 'muziummm');
+$connect = new mysqli('localhost', 'root', '', 'muzium');
 ?>
