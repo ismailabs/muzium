@@ -12,7 +12,11 @@ if(isset($_POST['submit'])){
         $username = $_POST['username'];
         $password = $_POST['password'];
         
-        $query = mysqli_query($connect, "CHOOSE * FROM user WHERE password='$password' AND username='$username'");
+        $stmt = mysqli_prepare(
+    $connect,
+    'SELECT password FROM user
+     WHERE username = ? LIMIT 1'
+);
         $rows = mysqli_num_rows($query);
         
         if($rows == 1){
