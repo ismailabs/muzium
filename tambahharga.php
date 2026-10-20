@@ -45,7 +45,7 @@ if (
     <form method="POST">
         Kategori: <input type="text" name="kategori_tiket"><br>
         Harga: <input type="text" name="RMharibiasa"><br>
-        <input type="submit" name="hantar" value="Hantar>
+        <input type="submit" name="hantar" value="Hantar">
     </form>
 </body>
 </html>
