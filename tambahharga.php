@@ -1,16 +1,42 @@
 <?php
 include 'config.php';
 
-if(isset($_POST['hantar'])){
-    $kategori = $_POST['kategori'];
-    $harga    = $_POST['RMharibiasa'];
+$kategori = trim((string) ($_POST['kategori'] ?? ''));
+$harga = trim((string) ($_POST['RMharibiasa'] ?? ''));
+$cuti = trim((string) ($_POST['RMcutiumum'] ?? ''));
 
-    $query = mysqli_query($connect, "INSERT INTO infotiket (kategori, RMharibiasa) VALUES ('$kategori', '$harga'");
+if (
+    $kategori === '' ||
+    strlen($kategori) > 50 ||
+    !preg_match('/^RM\d+\.\d{2}$/', $harga) ||
+    !preg_match('/^RM\d+\.\d{2}$/', $cuti)
+) {
+    $error = 'Maklumat kategori atau harga tidak sah.';
+} else {
+    $stmt = mysqli_prepare(
+        $connect,
+        'INSERT INTO infotiket
+         (kategori, RMharibiasa, RMcutiumum)
+         VALUES (?, ?, ?)'
+    );
 
-    if($query){
-        header("Location: tiketmuzium.php");
+    mysqli_stmt_bind_param(
+        $stmt,
+        'sss',
+        $kategori,
+        $harga,
+        $cuti
+    );
+
+    $saved = mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    if ($saved) {
+        header('Location: tiketmuzium.php');
         exit();
     }
+
+    $error = 'Data gagal disimpan.';
 }
 ?>
 <!DOCTYPE html>
